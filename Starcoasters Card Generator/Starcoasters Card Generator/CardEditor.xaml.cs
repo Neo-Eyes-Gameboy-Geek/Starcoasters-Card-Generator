@@ -446,6 +446,7 @@ namespace Starcoasters_Card_Generator
                 //Now actually execute the query
                 SQLiteCommand SaveCardCommand = new SQLiteCommand(SaveCardQuery, Globals.GlobalVars.DatabaseConnection);
                 SaveCardCommand.ExecuteNonQuery();
+                IsCardNew = false;
             }
             catch (Exception ex)
             {

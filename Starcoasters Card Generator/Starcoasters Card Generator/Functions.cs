@@ -235,6 +235,26 @@ namespace Starcoasters_Card_Generator
                     FontSize = 48;
                     TextWidth = 10000;
                     TextHeight = 10000;
+                    //now just split up the keywords, this will get rid of any placeholders
+                    string[] KeywordStringArray = KeywordsString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    KeywordsString = "";
+                    int keywordindex = 1;
+                    //now make the string with each of the keywords that arent place holder
+                    foreach(string keyword in KeywordStringArray)
+                    {
+                        if (!keyword.Contains("placeholder"))
+                        {
+                            if (keywordindex == 1 || keyword == " ")
+                            {
+                                KeywordsString += keyword.Trim();
+                            }
+                            else
+                            {
+                                KeywordsString += ", " + keyword.Trim();
+                            }
+                        }
+                        keywordindex++;
+                    }
                     while (TextWidth > 580 || TextHeight > 50)
                     {
                         //Bitmap to draw on
@@ -551,7 +571,7 @@ namespace Starcoasters_Card_Generator
             using (FolderBrowserDialog fbd = new FolderBrowserDialog())
             {
                 //make sure the file dialog initially opens in the same folder as the application
-                fbd.SelectedPath = System.IO.Directory.GetCurrentDirectory();
+                fbd.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                 //show a file file dialog to select a folder to save these cards to
                 DialogResult result = fbd.ShowDialog();
                 if(result== DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))

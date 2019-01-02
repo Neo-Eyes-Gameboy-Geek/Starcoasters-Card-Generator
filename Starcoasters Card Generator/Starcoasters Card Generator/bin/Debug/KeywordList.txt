@@ -1,0 +1,146 @@
+#Character
+|CMB_Form
+Humanoid
+Quadruped
+Arthropod
+Mamalian
+Reptillian
+Scuttloid
+Aquatic
+Horror
+Anomalous
+|CMB_Species
+Human
+Karkakahn
+Ancient Elven
+Shadow Elven
+Anibactoid
+Starwalker
+Beastkin
+Scuttle
+Spirit
+Spindle
+Scorpionoid
+Lagarto
+|CMB_Gender
+Male
+Female
+Ambiguous
+Genderless
+|CMB_Affiliation
+Foundation
+Scuttle
+Lagarto Empire
+Ancient Commune
+Shadow Fang
+Scorpionoid Olligarchy
+Unaffiliated
+|CMB_Class
+Centurion
+Doctor
+Guardian
+Weeaboo
+Gladitrix
+Nine-Tails
+Fighter
+Myrmidon
+Soldier
+|CMB_Rules
+Marksman
+Sniper
+Flier
+Assassin
+Scourge
+Reaver
+Ravager
+Footman
+Cavalry
+#Main Character
+|CMB_Form
+Humanoid
+Quadruped
+Arthropod
+Mamalian
+Reptillian
+Scuttloid
+Aquatic
+Horror
+Anomalous
+|CMB_Species
+Human
+Karkakahn
+Ancient Elven
+Shadow Elven
+Anibactoid
+Starwalker
+Beastkin
+Scuttle
+Spirit
+Spindle
+Scorpionoid
+Lagarto
+|CMB_Gender
+Male
+Female
+Ambiguous
+Genderless
+|CMB_Affiliation
+Foundation
+Scuttle
+Lagarto Empire
+Ancient Commune
+Shadow Fang
+Scorpionoid Olligarchy
+Unaffiliated
+|CMB_Class
+Centurion
+Doctor
+Guardian
+Weeaboo
+Gladitrix
+Nine-Tails
+Fighter
+Myrmidon
+Soldier
+|CMB_Rules
+Marksman
+Sniper
+Flier
+Assassin
+Scourge
+Reaver
+Ravager
+Footman
+Cavalry
+#Equipment
+|CMB_Form
+Weapon
+Armour
+Misc.
+Artifact
+|CMB_Species
+Head
+Chest
+Arms
+Legs
+Feet
+Back
+Accessory
+|CMB_Gender
+|CMB_Affiliation
+|CMB_Class
+|CMB_Rules
+#Location
+|CMB_Form
+|CMB_Species
+|CMB_Gender
+|CMB_Affiliation
+|CMB_Class
+|CMB_Rules
+#Event
+|CMB_Form
+|CMB_Species
+|CMB_Gender
+|CMB_Affiliation
+|CMB_Class
+|CMB_Rules
