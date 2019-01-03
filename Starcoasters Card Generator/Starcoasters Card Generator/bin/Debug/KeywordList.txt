@@ -1,5 +1,6 @@
 #Character
 |CMB_Form
+ 
 Humanoid
 Quadruped
 Arthropod
@@ -10,6 +11,7 @@ Aquatic
 Horror
 Anomalous
 |CMB_Species
+ 
 Human
 Karkakahn
 Ancient Elven
@@ -23,29 +25,40 @@ Spindle
 Scorpionoid
 Lagarto
 |CMB_Gender
+ 
 Male
 Female
 Ambiguous
 Genderless
 |CMB_Affiliation
+ 
 Foundation
 Scuttle
 Lagarto Empire
 Ancient Commune
 Shadow Fang
 Scorpionoid Olligarchy
-Unaffiliated
+Mercenary
 |CMB_Class
+ 
 Centurion
 Doctor
 Guardian
+Warden
 Weeaboo
 Gladitrix
 Nine-Tails
 Fighter
 Myrmidon
 Soldier
+Healer
+Civilian
+Knight
+Artificer
+Pilot
+Adventurer
 |CMB_Rules
+ 
 Marksman
 Sniper
 Flier
@@ -53,10 +66,12 @@ Assassin
 Scourge
 Reaver
 Ravager
-Footman
 Cavalry
+Vanguard
+Supporter
 #Main Character
 |CMB_Form
+ 
 Humanoid
 Quadruped
 Arthropod
@@ -67,6 +82,7 @@ Aquatic
 Horror
 Anomalous
 |CMB_Species
+ 
 Human
 Karkakahn
 Ancient Elven
@@ -80,29 +96,40 @@ Spindle
 Scorpionoid
 Lagarto
 |CMB_Gender
+ 
 Male
 Female
 Ambiguous
 Genderless
 |CMB_Affiliation
+ 
 Foundation
 Scuttle
 Lagarto Empire
 Ancient Commune
 Shadow Fang
 Scorpionoid Olligarchy
-Unaffiliated
+Mercenary
 |CMB_Class
+ 
 Centurion
 Doctor
 Guardian
+Warden
 Weeaboo
 Gladitrix
 Nine-Tails
 Fighter
 Myrmidon
 Soldier
+Healer
+Civilian
+Knight
+Artificer
+Pilot
+Adventurer
 |CMB_Rules
+ 
 Marksman
 Sniper
 Flier
@@ -110,15 +137,34 @@ Assassin
 Scourge
 Reaver
 Ravager
-Footman
 Cavalry
+Vanguard
+Supporter
 #Equipment
 |CMB_Form
+ 
 Weapon
 Armour
 Misc.
-Artifact
+Vehicle
 |CMB_Species
+ 
+Metallic
+Non-Metalic
+Melee
+Ranged
+Firearm
+Starship
+Star-Fighter
+Helicopter
+Airplane
+Boat
+Airship
+Tank
+Car
+Bike
+|CMB_Gender
+ 
 Head
 Chest
 Arms
@@ -126,12 +172,17 @@ Legs
 Feet
 Back
 Accessory
-|CMB_Gender
 |CMB_Affiliation
 |CMB_Class
+ 
+Artifact
 |CMB_Rules
+ 
+Unique
 #Location
 |CMB_Form
+ 
+Unique
 |CMB_Species
 |CMB_Gender
 |CMB_Affiliation
@@ -139,7 +190,13 @@ Accessory
 |CMB_Rules
 #Event
 |CMB_Form
+ 
+Continuous
+Instant
+Counter
 |CMB_Species
+ 
+Unique
 |CMB_Gender
 |CMB_Affiliation
 |CMB_Class

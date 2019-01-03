@@ -387,8 +387,8 @@ namespace Starcoasters_Card_Generator
                     int AbilityNumber = 0;
                     foreach(string Ability in AbilityArray)
                     {                        
-                        AbilityNameFontSize = 24;
-                        AbilityCostFontSize = 18;
+                        AbilityNameFontSize = 17;
+                        AbilityCostFontSize = 16;
                         FontSize = 16;
                         string[] AbilitySplit = Ability.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
                         //make the bitmap and graphics
@@ -480,17 +480,17 @@ namespace Starcoasters_Card_Generator
                     }
                     //Now for the flavourtext like the card ability effects is split up and drawn one word at a time, or at least
                     //converted one word at a time to a drawable string
-                    FontSize = 16;
+                    FontSize = 18;
                     string FlavourString = GetCardToRenderReader["flavour"].ToString();
                     string RenderableFlavourString = "";
-                    Font FlavourFont = new Font("Classic Robot Condensed", AbilityNameFontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
+                    Font FlavourFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
                     //both make the string that can be drawn and what size it can be drawn at
                     do
                     {
-                        Bitmap FlavourMap = new Bitmap(479, 46);
+                        Bitmap FlavourMap = new Bitmap(479, 48);
                         Graphics g = Graphics.FromImage(FlavourMap);
                         //update the font
-                        FlavourFont = new Font("Classic Robot Condensed", AbilityNameFontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
+                        FlavourFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
                         //split the flavourtext up based on spaces
                         string[] SplitFlavour = FlavourString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         //now for each word in the flavour text
@@ -511,13 +511,13 @@ namespace Starcoasters_Card_Generator
                         //now check to see if the rendered text fits into its allotted space if it doesnt shrink the font size and try again
                         TextWidth = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Width;
                         TextHeight = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Height;
-                        if (TextWidth>479|| TextHeight  > 46)
+                        if (TextWidth>479|| TextHeight  > 48)
                         {
                             FontSize--;
                         }
                         
                     }
-                    while (TextWidth > 479 || TextHeight > 46);
+                    while (TextWidth > 479 || TextHeight > 48);
                     //now we have a usable size for the text draw it into place
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
