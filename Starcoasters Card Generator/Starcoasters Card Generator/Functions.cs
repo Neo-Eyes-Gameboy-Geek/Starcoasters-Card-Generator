@@ -489,7 +489,7 @@ namespace Starcoasters_Card_Generator
                     {
                         //Reset the renderable flavour string
                         RenderableFlavourString = "";
-                        Bitmap FlavourMap = new Bitmap(479, 48);
+                        Bitmap FlavourMap = new Bitmap(479, 46);
                         Graphics g = Graphics.FromImage(FlavourMap);
                         //update the font
                         FlavourFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
@@ -513,13 +513,13 @@ namespace Starcoasters_Card_Generator
                         //now check to see if the rendered text fits into its allotted space if it doesnt shrink the font size and try again
                         TextWidth = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Width;
                         TextHeight = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Height;
-                        if (TextWidth>479|| TextHeight  > 48)
+                        if (TextWidth>479|| TextHeight  > 46)
                         {
                             FontSize--;
                         }
                         
                     }
-                    while (TextWidth > 479 || TextHeight > 48);
+                    while (TextWidth > 479 || TextHeight > 46);
                     //now we have a usable size for the text draw it into place
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
