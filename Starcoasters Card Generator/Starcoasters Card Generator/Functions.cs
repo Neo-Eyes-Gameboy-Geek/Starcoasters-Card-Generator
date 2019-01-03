@@ -487,6 +487,8 @@ namespace Starcoasters_Card_Generator
                     //both make the string that can be drawn and what size it can be drawn at
                     do
                     {
+                        //Reset the renderable flavour string
+                        RenderableFlavourString = "";
                         Bitmap FlavourMap = new Bitmap(479, 48);
                         Graphics g = Graphics.FromImage(FlavourMap);
                         //update the font
