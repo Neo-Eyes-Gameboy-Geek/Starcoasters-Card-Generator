@@ -386,8 +386,8 @@ namespace Starcoasters_Card_Generator
             {
                 // Get the values are write them back into the database for future perusal, then close the window
                 // First of all get the Primary and Secondary Names from the name textboxes
-                string CardNamePrimary = TBX_CardName.Text;
-                string CardNameSub = TBX_CardSub.Text;
+                string CardNamePrimary = MakeStringEscaped(TBX_CardName.Text);
+                string CardNameSub = MakeStringEscaped(TBX_CardSub.Text);
                 //Now for the awful bit, getting the keywords from the various combo boxes
                 string KeywordsString = "";
                 // Start with the card type
@@ -401,12 +401,14 @@ namespace Starcoasters_Card_Generator
                 KeywordsString += ", " + GetComboboxText(CMB_Rules);
                 //Lastly just add whatever is in the custom keyword textbox
                 KeywordsString += ", " + TBX_CustomKeyword.Text;
+                //now make sure the keyword string is escaped
+                KeywordsString = MakeStringEscaped(KeywordsString);
                 //Now for the card cost
-                string CardCostString = GetComboboxText(CMB_CostSelector);
+                string CardCostString = MakeStringEscaped(GetComboboxText(CMB_CostSelector));
                 //Now for Hp, ATK and DEF
-                string CardHP = TBX_CardHP.Text;
-                string CardATK = TBX_CardATK.Text;
-                string CardDEF = TBX_CardDEF.Text;
+                string CardHP = MakeStringEscaped(TBX_CardHP.Text);
+                string CardATK = MakeStringEscaped(TBX_CardATK.Text);
+                string CardDEF = MakeStringEscaped(TBX_CardDEF.Text);
                 //Now for the abilities
                 string Abilities = "";
                 for (int i = 0; i < LIV_AbilityPanel.Items.Count; i++)
@@ -423,9 +425,11 @@ namespace Starcoasters_Card_Generator
                     }
                     Abilities += abilitytext + ",";
                 }
+                //now make sure the ability string is properly escaped
+                Abilities = MakeStringEscaped(Abilities);
                 // now just for the flavour text and filepath for the image
-                string FlavourString = TBX_FlavourText.Text;
-                string FilepathString = TBX_ImagePath.Text;
+                string FlavourString = MakeStringEscaped(TBX_FlavourText.Text);
+                string FilepathString = MakeStringEscaped(TBX_ImagePath.Text);
                 //now to make an sqlite query and update the table
                 //The query differs depending on if you are updating a card or adding a new one
                 string SaveCardQuery = "";
@@ -480,6 +484,26 @@ namespace Starcoasters_Card_Generator
             IMG_CardPreviewer.Source = preview;
             //Cleaning up after myself
             map.Dispose();
+        }
+        public string MakeStringEscaped(string input)
+        {
+            //this will make sure any strings put into the database have the ' properly escaped since it doesnt really care if any
+            //other character is inserted in a string
+            string returnstring = "";
+            //now I need to go through for every character in the given string and make sure if its a ' add another ' to escape it
+            foreach(char c in input)
+            {
+                if (c == '\'')
+                {
+                    returnstring += $"''";
+                }
+                else
+                {
+                    returnstring += c;
+                }
+            }
+            //once all the string has been properly escaped return the modified string
+            return returnstring;
         }
     }
 }
