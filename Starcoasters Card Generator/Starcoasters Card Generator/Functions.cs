@@ -108,6 +108,7 @@ namespace Starcoasters_Card_Generator
                 {
                     //Actually drawing the image over the prior background
                     graphics.DrawImageUnscaledAndClipped(CardArtwork, new Rectangle(112, 112, 600, 900));
+                    CardArtwork.Dispose();
                 }
                 //Now draw the textboxes over the top of that
                 //The graphics class understands transparency thankfully so now we can do the same as above but for the textboxes
@@ -115,6 +116,7 @@ namespace Starcoasters_Card_Generator
                 using (Graphics graphics = Graphics.FromImage(CardBitmap))
                 {
                     graphics.DrawImage(CardBoxBitmap, new Rectangle(117, 117, 590, 920));
+                    CardBoxBitmap.Dispose();
                 }
                 //Now we need to get the information for the Cards text from the database with a query
                 string GetCardToRenderQuery = $"SELECT * FROM {CardSet} WHERE card_code='{CardIndex}'";
@@ -150,6 +152,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        TextCostMap.Dispose();
+                        g.Dispose();
                     }
                     //now we have a usable font size draw it into posistion centered in the cost textbox at the size                    
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -160,6 +164,7 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(CardCostString, CostFont, Brushes.Black, (int)170 - TextWidth / 2, (int)166 - TextHeight / 2);
                     }
+                    CostFont.Dispose();
                     //Now do the same for the cards primary name
                     string CardNamePrimaryString = GetCardToRenderReader["name_primary"].ToString();
                     FontSize = 72;
@@ -184,6 +189,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        PrimaryNameMap.Dispose();
+                        g.Dispose();
                     }
                     //now draw the name onto the actual image
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -194,6 +201,7 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(CardNamePrimaryString, PrimaryNameFont, Brushes.Black, (int)463 - TextWidth / 2, (int)150 - TextHeight / 2);
                     }
+                    PrimaryNameFont.Dispose();
                     //Now ditto for the secondary name
                     string CardSecondaryNameString = GetCardToRenderReader["name_secondary"].ToString();
                     FontSize = 36;
@@ -219,6 +227,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        SecondaryNameMap.Dispose();
+                        g.Dispose();
                     }
                     //Draw the secondary name in
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -229,6 +239,7 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(CardSecondaryNameString, SecondaryNameFont, Brushes.Black, (int)463 - TextWidth / 2, (int)199 - TextHeight / 2);
                     }
+                    SecondaryNameFont.Dispose();
                     //Now for keywords
                     string KeywordsString = GetCardToRenderReader["keywords"].ToString();
                     Font KeywordsFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
@@ -270,6 +281,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        KeywordsBitmap.Dispose();
+                        g.Dispose();
                     }
                     //Now draw the keywords in
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -280,6 +293,7 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(KeywordsString, KeywordsFont, Brushes.Black, (int)414 - TextWidth / 2, (int)678 - TextHeight / 2);
                     }
+                    KeywordsFont.Dispose();
                     //Now for HP,ATK and DEF
                     string CardHP = GetCardToRenderReader["hp"].ToString();
                     string CardATK = GetCardToRenderReader["atk"].ToString();
@@ -302,6 +316,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        g.Dispose();
+                        StatBitmap.Dispose();
                     }
                     //now draw HP
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -329,6 +345,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        StatBitmap.Dispose();
+                        g.Dispose();
                     }
                     //now draw ATK
                     using (Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -356,6 +374,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        StatBitmap.Dispose();
+                        g.Dispose();
                     }
                     //now draw DEF
                     using (Graphics graphics = Graphics.FromImage(CardBitmap))
@@ -366,6 +386,7 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(CardDEF, StatFont, Brushes.Black, (int)167 - TextWidth / 2, (int)959 - TextHeight / 2);
                     }
+                    StatFont.Dispose();
                     //Onceagain abilities are assholes and need lots of loops and special code to be drawn
                     TextWidth = 10000;
                     TextHeight = 10000;
@@ -477,7 +498,13 @@ namespace Starcoasters_Card_Generator
                         }
                         //now increment the ability number
                         AbilityNumber++;
+                        //and clean up
+                        g.Dispose();
+                        AbilityMap.Dispose();
                     }
+                    AbilityNameFont.Dispose();
+                    AbilityCostFont.Dispose();
+                    AbilityBodyFont.Dispose();
                     //Now for the flavourtext like the card ability effects is split up and drawn one word at a time, or at least
                     //converted one word at a time to a drawable string
                     FontSize = 18;
@@ -510,6 +537,8 @@ namespace Starcoasters_Card_Generator
                                 RenderableFlavourString += $"{Newline}{word}";
                             }
                         }
+                        //and clean up the string so there are no excess spaces
+                        RenderableFlavourString = RenderableFlavourString.Trim();
                         //now check to see if the rendered text fits into its allotted space if it doesnt shrink the font size and try again
                         TextWidth = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Width;
                         TextHeight = (int)g.MeasureString(RenderableFlavourString, FlavourFont).Height;
@@ -517,7 +546,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
-                        
+                        FlavourMap.Dispose();
+                        g.Dispose();                        
                     }
                     while (TextWidth > 479 || TextHeight > 46);
                     //now we have a usable size for the text draw it into place
@@ -525,6 +555,7 @@ namespace Starcoasters_Card_Generator
                     {
                         graphics.DrawString(RenderableFlavourString, FlavourFont, new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, 31, 31, 31)), (int)223, (int)1009 - TextHeight);
                     }
+                    FlavourFont.Dispose();
                     //Lastly for the setcode
                     string Setcode = GetCardToRenderReader["card_code"].ToString();
                     FontSize = 14;
@@ -544,6 +575,8 @@ namespace Starcoasters_Card_Generator
                         {
                             FontSize--;
                         }
+                        SetCodeMap.Dispose();
+                        g.Dispose();
                     }
                     while (TextHeight>18||TextWidth>190);
                     //now draw the setcode in place
@@ -555,6 +588,9 @@ namespace Starcoasters_Card_Generator
                         //Now Draw
                         graphics.DrawString(Setcode, SetCodeFont, Brushes.Black, (int)632 - TextWidth / 2, (int)1027 - TextHeight / 2);
                     }
+                    SetCodeFont.Dispose();
+                    //clean up the card reader
+                    GetCardToRenderReader.Close();
                 }
                 return CardBitmap;
             }

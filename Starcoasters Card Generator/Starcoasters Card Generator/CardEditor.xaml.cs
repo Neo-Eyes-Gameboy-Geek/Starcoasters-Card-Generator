@@ -215,6 +215,8 @@ namespace Starcoasters_Card_Generator
                             MakeAbilityBox(SplitAbility[0], SplitAbility[1], SplitAbility[2]);
                         }
                     }
+                    GetCardReader.Close();
+                    GetCardCommand.Dispose();
                 }
             }
             catch(Exception ex)
@@ -451,6 +453,8 @@ namespace Starcoasters_Card_Generator
                 SQLiteCommand SaveCardCommand = new SQLiteCommand(SaveCardQuery, Globals.GlobalVars.DatabaseConnection);
                 SaveCardCommand.ExecuteNonQuery();
                 IsCardNew = false;
+                //clean up after the command
+                SaveCardCommand.Dispose();
             }
             catch (Exception ex)
             {
@@ -483,7 +487,7 @@ namespace Starcoasters_Card_Generator
             BitmapSource preview = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(map.GetHbitmap(), IntPtr.Zero, System.Windows.Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(map.Width, map.Height));
             IMG_CardPreviewer.Source = preview;
             //Cleaning up after myself
-            map.Dispose();
+            map.Dispose();             
         }
         public string MakeStringEscaped(string input)
         {

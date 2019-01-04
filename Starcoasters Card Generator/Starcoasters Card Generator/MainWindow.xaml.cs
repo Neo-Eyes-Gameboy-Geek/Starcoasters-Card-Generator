@@ -80,6 +80,8 @@ namespace Starcoasters_Card_Generator
                     string TableDeleteQuery = $"DROP TABLE {TableToDelete}";
                     SQLiteCommand DropTableCommand = new SQLiteCommand(TableDeleteQuery, Globals.GlobalVars.DatabaseConnection);
                     DropTableCommand.ExecuteNonQuery();
+                    //cleaning up
+                    DropTableCommand.Dispose();
                 }
                 UpdateSetList();
             }
@@ -154,6 +156,9 @@ namespace Starcoasters_Card_Generator
                         LIV_SetList.Items.Add(SetItem);
                     }
                 }
+                //cleaning up
+                SetReader.Close();
+                GetSetCommand.Dispose();
             }
             catch (Exception ex)
             {

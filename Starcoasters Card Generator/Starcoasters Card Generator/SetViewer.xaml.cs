@@ -96,6 +96,7 @@ namespace Starcoasters_Card_Generator
                 //Execute the query
                 SQLiteCommand DeleteCardCommand = new SQLiteCommand(DeleteCardQuery, Globals.GlobalVars.DatabaseConnection);
                 DeleteCardCommand.ExecuteNonQuery();
+                DeleteCardCommand.Dispose();
                 //If all goes well, update the list to refelect the lack of the card
                 UpdateCardList();
             }
@@ -196,8 +197,11 @@ namespace Starcoasters_Card_Generator
                     Card.Tag = ReaderCard;
                     Card.Content = ReaderCard;
                     //Add the item to the list view
-                    LIV_CardList.Items.Add(Card);
+                    LIV_CardList.Items.Add(Card);                    
                 }
+                //and clean up after oneself
+                GetCardReader.Close();
+                GetCardCommand.Dispose();
             }
             catch (Exception ex)
             {
