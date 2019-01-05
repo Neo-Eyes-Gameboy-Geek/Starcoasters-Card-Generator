@@ -400,7 +400,7 @@ namespace Starcoasters_Card_Generator
                     //This is to determine the Y value of the given abilities top left corner as it will vary based on the number of abilities
                     int AbilityCount=1;
                     string WholeAbilityString = GetCardToRenderReader["ability"].ToString();
-                    string[] AbilityArray = WholeAbilityString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] AbilityArray = WholeAbilityString.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                     AbilityCount = AbilityArray.Length;
                     //Because the abilities are evenly spaced out, and with the same X value, the Y value they are drawn at is 714 + the amount of pixels each ability gets times
                     //how many spaces away it is from the first ability at y=714
@@ -411,7 +411,7 @@ namespace Starcoasters_Card_Generator
                         AbilityNameFontSize = 17;
                         AbilityCostFontSize = 16;
                         FontSize = 16;
-                        string[] AbilitySplit = Ability.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] AbilitySplit = Ability.Split(new char[] { ':' });
                         //make the bitmap and graphics
                         Bitmap AbilityMap = new Bitmap(479, (int)250 / AbilityCount);
                         Graphics g = Graphics.FromImage(AbilityMap);

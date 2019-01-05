@@ -205,12 +205,12 @@ namespace Starcoasters_Card_Generator
                         // put the full set of text into a string because its cleaner to type
                         string AbilityString = GetCardReader["ability"].ToString();
                         //Split it up based on commas as this is how I deliminated different abilities
-                        string[] AbilityArray = AbilityString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] AbilityArray = AbilityString.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                         // then for each ability they have make a new item in the stack panel
                         foreach(string Ability in AbilityArray)
                         {                            
                             //Split the ability into its 3 parts of name , cost and effect
-                            string[] SplitAbility = Ability.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] SplitAbility = Ability.Split(new char[] { ':' });
                             //Now make a listviewitem for this ability
                             MakeAbilityBox(SplitAbility[0], SplitAbility[1], SplitAbility[2]);
                         }
@@ -425,7 +425,7 @@ namespace Starcoasters_Card_Generator
                     {
                         abilitytext += box.Text + ":";
                     }
-                    Abilities += abilitytext + ",";
+                    Abilities += abilitytext + "|";
                 }
                 //now make sure the ability string is properly escaped
                 Abilities = MakeStringEscaped(Abilities);
