@@ -8,6 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("placeholderart.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("book.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("eye1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("rangeicon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("shieldicon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("snipericon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sword.png")]
 
 

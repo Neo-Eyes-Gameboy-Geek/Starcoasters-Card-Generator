@@ -83,6 +83,11 @@ namespace Starcoasters_Card_Generator
         {
             try
             {
+                //make sure they havent given you nothing
+                if (TBX_SetName.Text == null || TBX_SetName.Text==" ")
+                {
+                    return;
+                }
                 //Get information on all the tables in the database
                 string GetTableNames = "SELECT * FROM sqlite_master WHERE type='table'";
                 SQLiteCommand GetCodeCommand = new SQLiteCommand(GetTableNames, Globals.GlobalVars.DatabaseConnection);

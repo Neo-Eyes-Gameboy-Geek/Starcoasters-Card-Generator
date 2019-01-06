@@ -259,6 +259,71 @@ namespace Starcoasters_Card_Generator
                             {
                                 KeywordsString += keyword.Trim();
                             }
+                            else if (keyword.Contains('\\'))
+                            {
+                                //if the keyword contains a \ it means its one of the image keywords
+                                string[] RuleKeywords = keyword.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                                //and go through them, each one lights up a paticular icon on the card
+                                foreach(string rule in RuleKeywords)
+                                {                                    
+                                    //these all have the same process make bitmap from the required icon
+                                    //and draw it in place
+                                    if(rule.Trim() == "Range")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\RangeIcon.png");
+                                        using(Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 186, 578);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                    else if (rule.Trim() == "Marksman")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\SniperIcon.png");
+                                        using (Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 263, 578);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                    else if (rule.Trim() == "Vanguard")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\sword.png");
+                                        using (Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 340, 578);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                    else if (rule.Trim() == "Supporter")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\shieldicon.png");
+                                        using (Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 421, 578);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                    else if (rule.Trim() == "Mage")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\book.png");
+                                        using (Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 494, 580);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                    else if (rule.Trim() == "Psychic")
+                                    {
+                                        Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\eye1.png");
+                                        using (Graphics g = Graphics.FromImage(CardBitmap))
+                                        {
+                                            g.DrawImage(icon, 571, 593);
+                                        }
+                                        icon.Dispose();
+                                    }
+                                }
+                            }
                             else
                             {
                                 KeywordsString += ", " + keyword.Trim();
@@ -319,10 +384,7 @@ namespace Starcoasters_Card_Generator
                         g.Dispose();
                         StatBitmap.Dispose();
                     }
-                    while (TextWidth > 90 || TextHeight > 90) ;
-                    
-                        
-                    
+                    while (TextWidth > 90 || TextHeight > 90) ;                       
                     //now draw HP
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
