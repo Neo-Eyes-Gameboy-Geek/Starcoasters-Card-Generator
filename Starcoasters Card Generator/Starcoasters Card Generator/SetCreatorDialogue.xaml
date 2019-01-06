@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Starcoasters_Card_Generator"
         mc:Ignorable="d"
-        Title="SetCreatorDialogue" Height="150" Width="300" ResizeMode="NoResize">
+        Title="SetCreatorDialogue" Height="150" Width="300" ResizeMode="NoResize" Background="#313131">
     <Grid>
         <!--General Grid Defining Stuff-->
         <Grid.ColumnDefinitions>

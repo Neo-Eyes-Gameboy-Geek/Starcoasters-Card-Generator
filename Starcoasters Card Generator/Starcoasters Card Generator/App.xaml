@@ -4,6 +4,78 @@
              xmlns:local="clr-namespace:Starcoasters_Card_Generator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--This is to make the app look nicer with a dark charcoal theme that is easier on the eyes-->        
+        <Style TargetType="Button">
+            <!--This is for all the buttons-->
+            <!--Ugly Buttons have borders to them begone with it-->
+            <Setter Property="BorderThickness" Value="0"/>
+            <!--Make The Background a Darker Colour-->
+            <Setter Property="Background" Value="#808080"/>
+            <!--And some font styling so it is more readable-->
+            <Setter Property="FontFamily" Value="Segoe UI Historic"/>
+            <Setter Property="Foreground" Value="White"/>
+            <!--Some styling to round the buttons off just a little-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--This one is just for buttons that add things as they will be bolded-->
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}" x:Key="AddButtons">
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+        </Style>
+        <!--This one is for TextBlocks-->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI Historic"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        <!--TextBoxes-->
+        <Style TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#C4C4C4"/>
+            <Setter Property="FontFamily" Value="Segoe UI Historic"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Foreground" Value="#343434"/>
+        </Style>        
+        <!--Listviews-->
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="#606060"/>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="#565656"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="true" >
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="#343434" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true" >
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="#434343" />
+                </Trigger>
+            </Style.Triggers>
+            
+        </Style>
+        <!--Now for combo boxes and their items-->
+        <Style TargetType="ComboBox">
+            <Setter Property="BorderThickness" Value="1"/>            
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#575757"/>
+        </Style>
+        <!--Now the Gridview column header-->
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="#656565"/>
+        </Style>
+        <!--Now for the togglebutton that sits atop a combobox-->
+        <Style TargetType="ToggleButton">
+            <Setter Property="Background" Value="Red"/>
+        </Style>        
     </Application.Resources>
 </Application>

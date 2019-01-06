@@ -34,3 +34,4 @@ C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Ca
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\Starcoasters Card Generator.pdb
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\Starcoasters Card Generator.csprojAssemblyReference.cache
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\PlaceholderArt.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\App.baml
