@@ -134,7 +134,7 @@ namespace Starcoasters_Card_Generator
                     //And the font we will be using                    
                     Font CostFont = new Font("Downlink", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
                     //now to draw the text until it fits into a 79x79 box
-                    while (TextWidth >79 || TextHeight > 79)
+                    do
                     {
                         //make a bitmap of the exact maximum size the text can be
                         Bitmap TextCostMap = new Bitmap(79, 79);
@@ -148,13 +148,15 @@ namespace Starcoasters_Card_Generator
                         TextWidth = (int)CostSize.Width;
                         TextHeight = (int)CostSize.Height;
                         //now if the text would exceed the necessary constraints in either dimension shrink the font size 
-                        if(TextHeight > 79 || TextWidth > 79)
+                        if (TextHeight > 79 || TextWidth > 79)
                         {
                             FontSize--;
                         }
                         TextCostMap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 79 || TextHeight > 79) ;
+                    
                     //now we have a usable font size draw it into posistion centered in the cost textbox at the size                    
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -167,12 +169,10 @@ namespace Starcoasters_Card_Generator
                     CostFont.Dispose();
                     //Now do the same for the cards primary name
                     string CardNamePrimaryString = GetCardToRenderReader["name_primary"].ToString();
-                    FontSize = 72;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
+                    FontSize = 72;                    
                     Font PrimaryNameFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
                     //Now test what size the Name can be drawn is like done for cost above
-                    while (TextWidth > 448 || TextHeight > 72)
+                    do
                     {
                         //as before make a bitmap that can be drawn all over to test
                         Bitmap PrimaryNameMap = new Bitmap(448, 72);
@@ -185,13 +185,15 @@ namespace Starcoasters_Card_Generator
                         TextWidth = (int)PrimaryNameSize.Width;
                         TextHeight = (int)PrimaryNameSize.Height;
                         //and if its too big shrink the font size and try again
-                        if(TextWidth>448 || TextHeight > 72)
+                        if (TextWidth > 448 || TextHeight > 72)
                         {
                             FontSize--;
                         }
                         PrimaryNameMap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 448 || TextHeight > 72) ;
+                    
                     //now draw the name onto the actual image
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -204,12 +206,10 @@ namespace Starcoasters_Card_Generator
                     PrimaryNameFont.Dispose();
                     //Now ditto for the secondary name
                     string CardSecondaryNameString = GetCardToRenderReader["name_secondary"].ToString();
-                    FontSize = 36;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
+                    FontSize = 36;                    
                     Font SecondaryNameFont = new Font("Classic Robot Condensed", FontSize, GraphicsUnit.Pixel);
                     //as above find out what font size the secondary name can be drawn as
-                    while(TextWidth>448 || TextHeight > 36)
+                    do
                     {
                         //Bitmap to drawn all over
                         Bitmap SecondaryNameMap = new Bitmap(448, 36);
@@ -230,6 +230,8 @@ namespace Starcoasters_Card_Generator
                         SecondaryNameMap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 448 || TextHeight > 36) ;
+                    
                     //Draw the secondary name in
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -243,9 +245,7 @@ namespace Starcoasters_Card_Generator
                     //Now for keywords
                     string KeywordsString = GetCardToRenderReader["keywords"].ToString();
                     Font KeywordsFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
-                    FontSize = 48;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
+                    FontSize = 48;                    
                     //now just split up the keywords, this will get rid of any placeholders
                     string[] KeywordStringArray = KeywordsString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     KeywordsString = "";
@@ -266,7 +266,7 @@ namespace Starcoasters_Card_Generator
                         }
                         keywordindex++;
                     }
-                    while (TextWidth > 580 || TextHeight > 50)
+                    do
                     {
                         //Bitmap to draw on
                         Bitmap KeywordsBitmap = new Bitmap(580, 50);
@@ -284,6 +284,8 @@ namespace Starcoasters_Card_Generator
                         KeywordsBitmap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 580 || TextHeight > 50) ;
+                    
                     //Now draw the keywords in
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -298,12 +300,10 @@ namespace Starcoasters_Card_Generator
                     string CardHP = GetCardToRenderReader["hp"].ToString();
                     string CardATK = GetCardToRenderReader["atk"].ToString();
                     string CardDEF = GetCardToRenderReader["def"].ToString();
-                    FontSize = 60;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
+                    FontSize = 60;                    
                     //since all the stats are written in the same font only one needs to be made
                     Font StatFont = new Font("Downlink", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
-                    while (TextWidth > 90 || TextHeight > 90)
+                    do
                     {
                         //Bitmap to draw on
                         Bitmap StatBitmap = new Bitmap(90, 90);
@@ -319,6 +319,10 @@ namespace Starcoasters_Card_Generator
                         g.Dispose();
                         StatBitmap.Dispose();
                     }
+                    while (TextWidth > 90 || TextHeight > 90) ;
+                    
+                        
+                    
                     //now draw HP
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -330,9 +334,7 @@ namespace Starcoasters_Card_Generator
                     }
                     //ATK
                     FontSize = 60;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
-                    while (TextWidth > 90 || TextHeight > 90)
+                    do
                     {
                         //Bitmap to draw on
                         Bitmap StatBitmap = new Bitmap(90, 90);
@@ -348,6 +350,8 @@ namespace Starcoasters_Card_Generator
                         StatBitmap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 90 || TextHeight > 90) ;
+                    
                     //now draw ATK
                     using (Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -358,10 +362,8 @@ namespace Starcoasters_Card_Generator
                         graphics.DrawString(CardATK, StatFont, Brushes.Black, (int)167 - TextWidth / 2, (int)859 - TextHeight / 2);
                     }
                     //DEF
-                    FontSize = 60;
-                    TextWidth = 10000;
-                    TextHeight = 10000;
-                    while (TextWidth > 90 || TextHeight > 90)
+                    FontSize = 60;                    
+                    do
                     {
                         //Bitmap to draw on
                         Bitmap StatBitmap = new Bitmap(90, 90);
@@ -377,6 +379,7 @@ namespace Starcoasters_Card_Generator
                         StatBitmap.Dispose();
                         g.Dispose();
                     }
+                    while (TextWidth > 90 || TextHeight > 90);                   
                     //now draw DEF
                     using (Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
