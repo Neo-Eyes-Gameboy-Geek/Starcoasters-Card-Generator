@@ -49,12 +49,11 @@ namespace Starcoasters_Card_Generator
             }
             try
             {
-                //Because SQLite uses a non zero array, a cards posistion in the database is equal to the number part of its 
+                //What card we get is based on the
                 //Card code so we get that first
-                //So get the selected item from the list
-                ListViewItem SelectedItem = (ListViewItem)LIV_CardList.SelectedItem;
-                //Pull the card in the tag from this
-                Classes.CardOverview TagCard = (Classes.CardOverview)SelectedItem.Tag;
+                //So get the selected item from the list                
+                //Pull the card from the selected listitem
+                Classes.CardOverview TagCard = (Classes.CardOverview)LIV_CardList.SelectedItem;
                 //and get the full set code from it
                 string SetCode = TagCard.CardSetCode;
                 //Now after all of that we have a value to give to the card viewer
@@ -82,10 +81,8 @@ namespace Starcoasters_Card_Generator
             }
             try
             {
-                //First extract the list view item from the list so we can use it
-                ListViewItem SelectedItem = (ListViewItem)LIV_CardList.SelectedItem;
                 //Get the card out of the selected items tag
-                Classes.CardOverview CardToDelete = (Classes.CardOverview)SelectedItem.Tag;
+                Classes.CardOverview CardToDelete = (Classes.CardOverview)LIV_CardList.SelectedItem;
                 //now write onto a file in the current directory that this card code is available
                 using(StreamWriter sw = File.AppendText(Directory.GetCurrentDirectory() + $"\\{SetToView}.txt"))
                 {
@@ -147,7 +144,7 @@ namespace Starcoasters_Card_Generator
             //now make a new card editor with the 
             CardEditor editor = new CardEditor(SetToView, true, CodeToUse);
             //now show the new window
-            editor.ShowDialog();
+            editor.ShowDialog();           
             UpdateCardList();
         }
 
@@ -157,8 +154,8 @@ namespace Starcoasters_Card_Generator
             //updates the card set list
             try
             {
-                //In case it contains anything clear the listview 
-                LIV_CardList.Items.Clear();
+                //A new list is required for storing the items for the 
+                List<Classes.CardOverview> items = new List<Classes.CardOverview>();
                 //Get all the data from the table selected with a query
                 string GetCardQuery = $"SELECT * FROM {SetToView}";
                 SQLiteCommand GetCardCommand = new SQLiteCommand(GetCardQuery, Globals.GlobalVars.DatabaseConnection);
@@ -191,14 +188,15 @@ namespace Starcoasters_Card_Generator
                     }
                     //set the ability count to the reader cards ability count
                     ReaderCard.CardAbilityCount = AbilityCount;
-                    //Make a listview item 
-                    ListViewItem Card = new ListViewItem();
-                    //make the ReaderCard both the items tag and content
-                    Card.Tag = ReaderCard;
-                    Card.Content = ReaderCard;
-                    //Add the item to the list view
-                    LIV_CardList.Items.Add(Card);                    
+                    //add readercard to the list
+                    items.Add(ReaderCard);
                 }
+                //now make the items list the itemsource for the listview
+                LIV_CardList.ItemsSource = items;
+                //now make a selectionview from the itemsource of the list
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(LIV_CardList.ItemsSource);
+                //now sort this based on the cardsetcode and sort it ascendingly
+                view.SortDescriptions.Add(new System.ComponentModel.SortDescription("CardSetCode", System.ComponentModel.ListSortDirection.Ascending));
                 //and clean up after oneself
                 GetCardReader.Close();
                 GetCardCommand.Dispose();
@@ -216,9 +214,8 @@ namespace Starcoasters_Card_Generator
                 //first we need to find out how many elements are in this sets list
                 int NumberOfCards = LIV_CardList.Items.Count + 1;
                 //now we need to append this to a string that is the finalised code
-                //first you need to get the set code prefix from the first item in the list (since there will always be one)
-                ListViewItem FirstItem = (ListViewItem)LIV_CardList.Items.GetItemAt(0);
-                Classes.CardOverview Overview = (Classes.CardOverview)FirstItem.Tag;
+                //first you need to get the set code prefix from the first item in the list (since there will always be one)                
+                Classes.CardOverview Overview = (Classes.CardOverview)LIV_CardList.Items.GetItemAt(0);
                 //now this is the card code that will be appended to 
                 string ReturnCode = Overview.CardSetCode.Split('-')[0];
                 //now we need to add to the set code the number we got earlier, added in with some zeroes as needed
@@ -266,6 +263,13 @@ namespace Starcoasters_Card_Generator
         {
             //This one will export the cards resized as vassal sized cards for Tabletop Sim
             Functions.ExportCards(SetToView, true, true);
-        }        
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //as the window is closing make sure to close the database connection, to stop it choking 
+            //the previous window
+            Globals.GlobalVars.DatabaseConnection.Close();
+        }
     }
 }

@@ -146,7 +146,7 @@ namespace Starcoasters_Card_Generator
                     //Add a single card to the table to avoid errors
                     string InitialCardCommand = $"INSERT INTO {SetName} (card_code, name_primary, name_secondary, cost, hp, atk, def, keywords, ability, flavour, imagestring)" +
                         $" VALUES ('{SetCode}-0001', 'Testacles', 'The Debug Centurion', '0', 100, 100, 100, 'Character, Humanoid, Human, Male, Foundation, Centurion, Marksman, OPPLZNERF', " +
-                        $"'Debug God: When you deploy this card: You Win The Game, Yes Really: When You Deploy This Card: You Win The Game', 'Bow before the might of Testacles','C:\')";
+                        $"'Debug God: When you deploy this card: You Win The Game| Yes Really: When You Deploy This Card: You Win The Game', 'Bow before the might of Testacles','C:\')";
                     SQLiteCommand InsertCard = new SQLiteCommand(InitialCardCommand, Globals.GlobalVars.DatabaseConnection);
                     InsertCard.ExecuteNonQuery();
                     //once the table is made close this window cos its done its job

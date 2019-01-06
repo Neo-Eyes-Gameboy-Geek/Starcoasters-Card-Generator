@@ -43,6 +43,8 @@ namespace Starcoasters_Card_Generator
                     //make a new Setviewer window passing it the set name extracted above
                     SetViewer SetViewer = new SetViewer(SelectedSetName);
                     SetViewer.ShowDialog();
+                    //since the other window closed the connection it needs to be reopened
+                    Globals.GlobalVars.DatabaseConnection.Open();
                 }
                 else
                 {
@@ -65,7 +67,7 @@ namespace Starcoasters_Card_Generator
             {
                 //Make sure there is an item selected to delete
                 if (LIV_SetList.SelectedItem != null)
-                {
+                {                    
                     //Extract the List Item from the listview
                     ListViewItem SelectedItem = (ListViewItem)LIV_SetList.SelectedItem;
                     //Extract the set overview from the listview item
@@ -81,7 +83,7 @@ namespace Starcoasters_Card_Generator
                     SQLiteCommand DropTableCommand = new SQLiteCommand(TableDeleteQuery, Globals.GlobalVars.DatabaseConnection);
                     DropTableCommand.ExecuteNonQuery();
                     //cleaning up
-                    DropTableCommand.Dispose();
+                    DropTableCommand.Dispose();                    
                 }
                 UpdateSetList();
             }
@@ -154,6 +156,9 @@ namespace Starcoasters_Card_Generator
                         SetItem.Content = SetData;
                         //Add the item to the listview
                         LIV_SetList.Items.Add(SetItem);
+                        //to be a clean boi
+                        CodeReader.Close();
+                        GetTableCodeCommand.Dispose();
                     }
                 }
                 //cleaning up
