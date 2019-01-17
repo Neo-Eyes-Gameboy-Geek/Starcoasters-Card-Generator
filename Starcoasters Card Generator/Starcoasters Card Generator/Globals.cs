@@ -14,6 +14,8 @@ namespace Starcoasters_Card_Generator
         {
             //The SQLite Connection Object
             public static SQLiteConnection DatabaseConnection;
+            //the list of cards to be used for the battle mode
+            public static List<Classes.CardDetail> AllCards;
         }
     }
 }

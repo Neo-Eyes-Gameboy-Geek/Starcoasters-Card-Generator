@@ -61,6 +61,8 @@ namespace Starcoasters_Card_Generator
             public string CardFlavour { get; set; }
             //Cards set number
             public string CardCode { get; set; }
+            //The string for the image path
+            public string ImagePath { get; set; }
         }
     }
 }

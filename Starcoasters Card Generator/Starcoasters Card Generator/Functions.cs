@@ -257,6 +257,7 @@ namespace Starcoasters_Card_Generator
                         {
                             if (keywordindex == 1 || keyword == " ")
                             {
+                                //the first keyword doesnt need the space before it, helps keep it centered
                                 KeywordsString += keyword.Trim();
                             }
                             else if (keyword.Contains('\\'))

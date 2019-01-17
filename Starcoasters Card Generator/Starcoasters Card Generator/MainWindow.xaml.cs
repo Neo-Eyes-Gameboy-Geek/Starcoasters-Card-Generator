@@ -115,6 +115,8 @@ namespace Starcoasters_Card_Generator
             {
                 //In Case There Is Anything In The ListView Clear It
                 LIV_SetList.Items.Clear();
+                //and empty out the global list of cards TODO
+                Globals.GlobalVars.AllCards.Clear();
                 //Get information on all the tables in the database
                 string GetTableNames = "SELECT name FROM sqlite_master WHERE type='table'";
                 SQLiteCommand GetSetCommand = new SQLiteCommand(GetTableNames, Globals.GlobalVars.DatabaseConnection);
@@ -146,6 +148,37 @@ namespace Starcoasters_Card_Generator
                         while (LengthReader.Read())
                         {
                             SetSize++;
+                            //and since this reader is running through everything anyway, may as well use it to populate the list TODO
+                            Classes.CardDetail card = new Classes.CardDetail();
+                            //fill in this card detail and add it to the list
+                            card.CardNamePrimary = LengthReader["name_primary"].ToString();
+                            card.CardNameSecondary = LengthReader["name_secondary"].ToString();
+                            card.CardKeywords = LengthReader["keywords"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            card.CardCost = LengthReader["cost"].ToString();
+                            card.CardHP = int.Parse(LengthReader["hp"].ToString());
+                            card.CardATK = int.Parse(LengthReader["atk"].ToString());
+                            card.CardDEF = int.Parse(LengthReader["def"].ToString());
+                            card.CardCode = LengthReader["card_code"].ToString();
+                            card.ImagePath = LengthReader["imagestring"].ToString();
+                            //now for abilities cos like always they are a special snowflake
+                            string AbilityString = LengthReader["ability"].ToString();
+                            //TODO find a way to initialise a variable length array, i know how i ust dont remember
+                            Classes.Ability[] abilities = new Classes.Ability[45];
+                            string[] splitstring = AbilityString.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                            int i = 0;
+                            foreach(string ability in splitstring)
+                            {
+                                //dont ignore empty entries here because that would be bad
+                                string[] parts = ability.Split(':');
+                                Classes.Ability abil = new Classes.Ability();
+                                abil.AbilityName = parts[0];
+                                abil.AbilityTrigger = parts[1];
+                                abil.AbilityEffect = parts[2];
+                                //now add abil to the abilities array and dispose of abil
+                                abilities[i] = abil;
+                            }
+                            card.CardAbilities = abilities;
+                            Globals.GlobalVars.AllCards.Add(card);                            
                         }
                         // Shove all the data just gathered into a Set Overview
                         Classes.SetOverview SetData = new Classes.SetOverview { SetName = SetReader["name"].ToString(), SetCode = TempCode, SetCount = SetSize };
