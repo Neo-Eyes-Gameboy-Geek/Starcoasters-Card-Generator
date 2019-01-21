@@ -300,7 +300,7 @@ namespace Starcoasters_Card_Generator
                                         Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\shieldicon.png");
                                         using (Graphics g = Graphics.FromImage(CardBitmap))
                                         {
-                                            g.DrawImage(icon, 421, 578);
+                                            g.DrawImage(icon, 417, 578);
                                         }
                                         icon.Dispose();
                                     }
@@ -309,7 +309,7 @@ namespace Starcoasters_Card_Generator
                                         Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\book.png");
                                         using (Graphics g = Graphics.FromImage(CardBitmap))
                                         {
-                                            g.DrawImage(icon, 494, 580);
+                                            g.DrawImage(icon, 494, 578);
                                         }
                                         icon.Dispose();
                                     }
@@ -318,7 +318,7 @@ namespace Starcoasters_Card_Generator
                                         Bitmap icon = new Bitmap(Directory.GetCurrentDirectory() + "\\eye1.png");
                                         using (Graphics g = Graphics.FromImage(CardBitmap))
                                         {
-                                            g.DrawImage(icon, 571, 593);
+                                            g.DrawImage(icon, 571, 578);
                                         }
                                         icon.Dispose();
                                     }
@@ -624,6 +624,29 @@ namespace Starcoasters_Card_Generator
                     //Lastly for the setcode
                     string Setcode = GetCardToRenderReader["card_code"].ToString();
                     FontSize = 14;
+                    //just need to figure out the colour of the set code based on rarity
+                    string Rarity = GetCardToRenderReader["rarity"].ToString();
+                    Color FontColour = new Color();
+                    if (Rarity == "common")
+                    {
+                        //black for common
+                        FontColour = ColorTranslator.FromHtml("#000000");
+                    }
+                    else if (Rarity == "rare")
+                    {
+                        //Patriot Blue for rare
+                        FontColour = ColorTranslator.FromHtml("#103A5D");
+                    }
+                    else if (Rarity == "super")
+                    {
+                        //Soviet Red for Super Rare
+                        FontColour = ColorTranslator.FromHtml("#CD0000");
+                    }
+                    else if (Rarity == "ultima")
+                    {
+                        //Gold for ultima rare
+                        FontColour = ColorTranslator.FromHtml("#FFD700");
+                    }
                     Font SetCodeFont = new Font("Downlink", FontSize, GraphicsUnit.Pixel);
                     do
                     {
@@ -644,6 +667,8 @@ namespace Starcoasters_Card_Generator
                         g.Dispose();
                     }
                     while (TextHeight>18||TextWidth>190);
+                    //the colour brush
+                    SolidBrush FontBrush = new SolidBrush(FontColour);
                     //now draw the setcode in place
                     using(Graphics graphics = Graphics.FromImage(CardBitmap))
                     {
@@ -651,9 +676,10 @@ namespace Starcoasters_Card_Generator
                         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                         graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
                         //Now Draw
-                        graphics.DrawString(Setcode, SetCodeFont, Brushes.Black, (int)632 - TextWidth / 2, (int)1027 - TextHeight / 2);
+                        graphics.DrawString(Setcode, SetCodeFont, FontBrush, (int)632 - TextWidth / 2, (int)1027 - TextHeight / 2);
                     }
                     SetCodeFont.Dispose();
+                    FontBrush.Dispose();
                     //clean up the card reader
                     GetCardToRenderReader.Close();
                 }

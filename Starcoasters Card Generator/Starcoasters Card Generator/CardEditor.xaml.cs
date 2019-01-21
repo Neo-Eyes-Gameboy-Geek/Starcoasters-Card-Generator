@@ -201,6 +201,24 @@ namespace Starcoasters_Card_Generator
                         //More substitution for the flavour text and image path by the same means
                         TBX_FlavourText.Text = GetCardReader["flavour"].ToString();
                         TBX_ImagePath.Text = GetCardReader["imagestring"].ToString();
+                        //get the rarity from the database and set the appropriate radio button
+                        string Rarity = GetCardReader["rarity"].ToString();
+                        if(Rarity == "ultima")
+                        {
+                            RBT_Ultima.IsChecked = true;
+                        }
+                        else if(Rarity == "super")
+                        {
+                            RBT_Super.IsChecked = true;
+                        }
+                        else if (Rarity == "rare")
+                        {
+                            RBT_Rare.IsChecked = true;
+                        }
+                        else
+                        {
+                            RBT_Common.IsChecked = true;
+                        }
                         //Did the Abilities Last cos i hadnt figured out how to format them yet
                         // put the full set of text into a string because its cleaner to type
                         string AbilityString = GetCardReader["ability"].ToString();
@@ -217,6 +235,11 @@ namespace Starcoasters_Card_Generator
                     }
                     GetCardReader.Close();
                     GetCardCommand.Dispose();
+                }
+                else
+                {
+                    //if the card is new default to setting it to being common
+                    RBT_Common.IsChecked = true;
                 }
             }
             catch(Exception ex)
@@ -432,6 +455,24 @@ namespace Starcoasters_Card_Generator
                 // now just for the flavour text and filepath for the image
                 string FlavourString = MakeStringEscaped(TBX_FlavourText.Text);
                 string FilepathString = MakeStringEscaped(TBX_ImagePath.Text);
+                //now get the rarity out of the radio buttons
+                string CardRarity = "";
+                if (RBT_Common.IsChecked == true)
+                {
+                    CardRarity = "common";
+                }
+                else if (RBT_Rare.IsChecked == true)
+                {
+                    CardRarity = "rare";
+                }
+                else if (RBT_Super.IsChecked == true)
+                {
+                    CardRarity = "super";
+                }
+                else
+                {
+                    CardRarity = "ultima";
+                }
                 //now to make an sqlite query and update the table
                 //The query differs depending on if you are updating a card or adding a new one
                 string SaveCardQuery = "";
@@ -439,14 +480,15 @@ namespace Starcoasters_Card_Generator
                 {
                     //if the card is new the Card Code that was sent here needs to be written into the table
                     string NewCardSetCode = CardsCode;
-                    SaveCardQuery = $"INSERT INTO {CardsSet} (card_code, name_primary, name_secondary, cost, hp, atk, def, keywords, ability, flavour, imagestring)" +
+                    SaveCardQuery = $"INSERT INTO {CardsSet} (card_code, name_primary, name_secondary, cost, hp, atk, def, keywords, ability, flavour, imagestring, rarity)" +
                     $"VALUES ('{NewCardSetCode}', '{CardNamePrimary}', '{CardNameSub}', '{CardCostString}', '{CardHP}', '{CardATK}', '{CardDEF}', '{KeywordsString}', " +
-                    $"'{Abilities}', '{FlavourString}', '{FilepathString}')";
+                    $"'{Abilities}', '{FlavourString}', '{FilepathString}', '{CardRarity}')";
                 }
                 else
                 {
                     SaveCardQuery = $"UPDATE {CardsSet} SET name_primary = '{CardNamePrimary}', name_secondary = '{CardNameSub}', cost = '{CardCostString}', hp = '{CardHP}', " +
-                        $"atk = '{CardATK}', def = '{CardDEF}', keywords = '{KeywordsString}', ability = '{Abilities}', flavour = '{FlavourString}', imagestring =' {FilepathString}'" +
+                        $"atk = '{CardATK}', def = '{CardDEF}', keywords = '{KeywordsString}', ability = '{Abilities}', flavour = '{FlavourString}', imagestring ='{FilepathString}'," +
+                        $" rarity ='{CardRarity}'" +
                         $" WHERE card_code = '{CardsCode}'";
                 }
                 //Now actually execute the query

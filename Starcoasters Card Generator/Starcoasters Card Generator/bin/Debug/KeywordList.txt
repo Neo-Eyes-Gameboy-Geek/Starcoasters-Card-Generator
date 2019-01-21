@@ -59,19 +59,19 @@ Pilot
 Adventurer
 |CMB_Rules
  
-Range
-Marksman
+Range\\
+Marksman\\
 Range\\Marksman
-Vanguard
+Vanguard\\
 Vanguard\\Range
 Vanguard\\Marksman
 Vanguard\\Range\\Marksman
-Supporter
+Supporter\\
 Supporter\\Range
 Supporter\\Marksman
 Supporter\\Range\\Marksman
-Psychic
-Mage
+Psychic\\
+Mage\\
 Psychic\\Mage
 Psychic\\Range
 Psychic\\Marksman

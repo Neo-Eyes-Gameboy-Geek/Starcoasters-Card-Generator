@@ -81,6 +81,11 @@
         <Button x:Name="BTN_AddAbility" Grid.Column="2" Grid.Row="4" Content="Add Ability" Click="BTN_AddAbility_Click"/>
         <!--As above but removing-->
         <Button x:Name="BTN_RemoveAbility" Grid.Column="1" Grid.Row="4" Content="Remove Ability" Click="BTN_RemoveAbility_Click"/>
+        <!-- Radio Buttons for rarity -->
+        <RadioButton x:Name="RBT_Common" Grid.Column="4" Grid.Row="4" Content="Common" GroupName="Rarity"/>
+        <RadioButton x:Name="RBT_Rare" Grid.Column="5" Grid.Row="4" Content="Rare" GroupName="Rarity"/>
+        <RadioButton x:Name="RBT_Super" Grid.Column="6" Grid.Row="4" Content="Super Rare" GroupName="Rarity"/>
+        <RadioButton x:Name="RBT_Ultima" Grid.Column="7" Grid.Row="4" Content="Ultima Rare" GroupName="Rarity"/>
         <!--Scrollviewer holding the array of abilities-->
         <ScrollViewer Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="9">
             <ListView x:Name="LIV_AbilityPanel"/>
