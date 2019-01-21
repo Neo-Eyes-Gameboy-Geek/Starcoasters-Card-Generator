@@ -473,9 +473,9 @@ namespace Starcoasters_Card_Generator
                     int AbilityNumber = 0;
                     foreach(string Ability in AbilityArray)
                     {                        
-                        AbilityNameFontSize = 17;
-                        AbilityCostFontSize = 16;
-                        FontSize = 16;
+                        AbilityNameFontSize = 25;
+                        AbilityCostFontSize = 24;
+                        FontSize = 24;
                         string[] AbilitySplit = Ability.Split(new char[] { ':' });
                         //make the bitmap and graphics
                         Bitmap AbilityMap = new Bitmap(479, (int)250 / AbilityCount);
@@ -572,7 +572,7 @@ namespace Starcoasters_Card_Generator
                     AbilityBodyFont.Dispose();
                     //Now for the flavourtext like the card ability effects is split up and drawn one word at a time, or at least
                     //converted one word at a time to a drawable string
-                    FontSize = 18;
+                    FontSize = 24;
                     string FlavourString = GetCardToRenderReader["flavour"].ToString();
                     string RenderableFlavourString = "";
                     Font FlavourFont = new Font("Classic Robot Condensed", FontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);

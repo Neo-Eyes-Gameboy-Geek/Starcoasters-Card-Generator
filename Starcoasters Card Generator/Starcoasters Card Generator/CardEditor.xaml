@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Starcoasters_Card_Generator"
         mc:Ignorable="d"
-        Title="CardEditor" Height="720" Width="1280" ResizeMode="CanMinimize" Loaded="Window_Loaded">
+        Title="CardEditor" Height="720" Width="1280" Loaded="Window_Loaded">
     <Grid>
        <!-- As Usual Define The Grid -->
         <Grid.ColumnDefinitions>
