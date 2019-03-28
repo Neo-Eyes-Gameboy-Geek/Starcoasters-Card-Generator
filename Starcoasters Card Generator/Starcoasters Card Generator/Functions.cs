@@ -769,5 +769,10 @@ namespace Starcoasters_Card_Generator
                 card.Dispose();
             }
         }
+        //A function to draw the text where its needed
+        public static void DrawText(float PosX, float PosY, float SizX, float SizY, string Text, Font TXTFont)
+        {
+            //TODO replicate the text drawing routine in a standard fashion here and replace all the hundred of lines of repeated code above
+        }
     }
 }

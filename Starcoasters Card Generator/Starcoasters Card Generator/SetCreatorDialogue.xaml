@@ -21,6 +21,8 @@
             <RowDefinition Height="2*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <!--A Title-->
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="Select A Set Name" TextAlignment="Center"/>
         <!--Text Boxes For Set Name And Preview Of Set Code-->
         <TextBox x:Name="TBX_SetName" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" SpellCheck.IsEnabled="True" TextAlignment="Center" TextChanged="TBX_SetName_TextChanged"/>
         <TextBlock x:Name="TBL_SetCodePreviewer" Grid.Column="1" Grid.Row="2" Text="Set Code: " TextAlignment="Right"/>
