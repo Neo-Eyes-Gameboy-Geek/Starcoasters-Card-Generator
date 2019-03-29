@@ -647,7 +647,7 @@ namespace Starcoasters_Card_Generator
                         //Gold for ultima rare
                         FontColour = ColorTranslator.FromHtml("#FFD700");
                     }
-                    Font SetCodeFont = new Font("Downlink", FontSize, GraphicsUnit.Pixel);
+                    Font SetCodeFont = new Font("Downlink", FontSize, GraphicsUnit.Pixel);                    
                     do
                     {
                         Bitmap SetCodeMap = new Bitmap(190, 18);
@@ -676,7 +676,7 @@ namespace Starcoasters_Card_Generator
                         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                         graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
                         //Now Draw
-                        graphics.DrawString(Setcode, SetCodeFont, FontBrush, (int)632 - TextWidth / 2, (int)1027 - TextHeight / 2);
+                        graphics.DrawString(Setcode, SetCodeFont, FontBrush, (int)632 - TextWidth / 2, (int)1027 - TextHeight / 2);                        
                     }
                     SetCodeFont.Dispose();
                     FontBrush.Dispose();
@@ -712,8 +712,7 @@ namespace Starcoasters_Card_Generator
             string ExportCardString = $"SELECT * FROM {Set}";
             SQLiteCommand ExportCardCommand = new SQLiteCommand(ExportCardString, Globals.GlobalVars.DatabaseConnection);
             SQLiteDataReader ExportCardReader = ExportCardCommand.ExecuteReader();
-            //now go through each of the cards in the set selected
-            int i = 1;
+            //now go through each of the cards in the set selected            
             while (ExportCardReader.Read())
             {
                 //make the card as a bitmap
@@ -770,9 +769,101 @@ namespace Starcoasters_Card_Generator
             }
         }
         //A function to draw the text where its needed
-        public static void DrawText(float PosX, float PosY, float SizX, float SizY, string Text, Font TXTFont)
+        public static Bitmap DrawText(int SizX, int SizY, string Text, int FontSize, string FontFamily , string FontStyle, SolidBrush FontBrush, Color FontColor, bool CenterJustified)
         {
-            //TODO replicate the text drawing routine in a standard fashion here and replace all the hundred of lines of repeated code above
+            //Start with the bitmap this will be drawn on
+            Bitmap Map = new Bitmap(SizX, SizY);
+            //Split the text up for rendering
+            string[] SplitText = Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            //now using statement so it automatically disposes the graphics object once it is finished
+            using(Graphics g = Graphics.FromImage(Map))
+            {
+                //variables needed to measure the size of the string
+                int TextWidth = 0;
+                int TextHeight = 0;
+                //and the renderable string
+                string RenderableString = "";
+                //we need this loop to execute at least once 
+                do
+                {
+                    //empty out the renderable string just in case it already has something in it
+                    RenderableString = "";
+                    //make the font we will be using accounting for bold or italics
+                    Font TestFont = GenerateFont(FontFamily, FontSize, FontStyle, FontColor);
+                    //now loop through every word in the text, adding to the string word by word , if it is too wide add a new line 
+                    foreach(string word in SplitText)
+                    {
+                        //check to see if the string with the new word would be too long
+                        if(g.MeasureString($"{RenderableString} {word}",TestFont).Width > SizX)
+                        {
+                            //if it is add a newline character in then the new word
+                            RenderableString += $"\n{word}";
+                        }
+                        else
+                        {
+                            //if it isnt, just tack the word on the end
+                            RenderableString += $" {word}";
+                        }
+
+                    }
+                    //now we have a renderable string measure its width and height and if it is too big shrink the font and try again
+                    TextWidth = (int)g.MeasureString(RenderableString, TestFont).Width;
+                    TextHeight = (int)g.MeasureString(RenderableString, TestFont).Height;
+                    if(TextWidth>SizX || TextHeight > SizY)
+                    {
+                        FontSize--;
+                    }
+                    //dispose of the font because we cannot use it outside of the loop
+                    TestFont.Dispose();
+                }
+                while (TextWidth > SizX || TextHeight > SizY);
+                //Now we have a usable string and a font size make the font we will use
+                Font TextFont = GenerateFont(FontFamily, FontSize, FontStyle, FontColor);
+                //set some graphical settings for niceness, slows the function down but for nicer results
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                //Not as nice as ClearType but doesnt require special fonts
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit; 
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                //and some variables on where to start writing
+                int PosX;
+                int PosY;
+                //now adjust the posistion of the card text if it is center justified, not needing comparison since its already a bool
+                if (CenterJustified)
+                {
+                    //if the text is centered it needs to have its top left corner shifted to the middle then back by half its own width and heigh
+                    PosX = (int)SizX / 2 - TextWidth / 2;
+                    PosY = (int)SizY / 2 - TextHeight / 2;
+                }
+                //Now draw the text in place
+                g.DrawString(RenderableString, TextFont, FontBrush, 632 - TextWidth / 2, 1027 - TextHeight / 2);                
+            }
+            //and return the now rendered bitmap
+            return Map;
+        }
+        public static Font GenerateFont(string FontFamily, int FontSize, string FontStyle, Color FontColor)
+        {
+            //make a new font from the values it is passed
+            if(FontStyle == "italic")
+            {
+                //for italic fonts
+                Font NewFont = new Font(FontFamily, FontSize, System.Drawing.FontStyle.Italic, GraphicsUnit.Pixel);
+                //return the new font
+                return NewFont;
+            }
+            else if (FontStyle == "bold")
+            {
+                //for bold fonts
+                Font NewFont = new Font(FontFamily, FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
+                //return the new font
+                return NewFont;
+            }
+            else
+            {
+                //else it is a basic unstylised font
+                Font NewFont = new Font(FontFamily, FontSize, GraphicsUnit.Pixel);
+                //return the new font
+                return NewFont;
+            }            
         }
     }
 }
