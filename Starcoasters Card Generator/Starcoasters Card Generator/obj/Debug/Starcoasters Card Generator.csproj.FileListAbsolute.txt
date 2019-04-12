@@ -1,7 +1,6 @@
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\CardTypes.txt
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\KeywordList.txt
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\CardBackground.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\CardTextBoxes.png
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\Starcoasters Card Generator.exe.config
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\Starcoasters Card Generator.exe
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\Starcoasters Card Generator.pdb

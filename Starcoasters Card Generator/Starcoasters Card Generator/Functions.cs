@@ -61,63 +61,8 @@ namespace Starcoasters_Card_Generator
                 // first of all A bitmap is needed of the background that everything is being placed on top of
                 //thankfully this is included in the project, by me
                 Bitmap CardBitmap = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "\\CardBackground.png");
-                //now just in case if the file path given is incorrect or the file doesnt exist just return the background
-                if (!File.Exists(ArtPath))
-                {
-                    System.Windows.MessageBox.Show($"The file path for the image at {ArtPath} does not exist or the directory is wrong");
-                    ArtPath = Directory.GetCurrentDirectory() + $"\\PlaceholderArt.png";
-                }
-                //Now because the card artwork may or may not be the correct size manipulate it just a little bit so it fits the 600 x 900 size needed with cropping
-                Bitmap CardArtwork = new Bitmap(ArtPath);
-                if(CardArtwork.Width> 600 && CardArtwork.Height> 900)
-                {
-                    //if the card is too big in both dimension take out the middle 600 x 900 pixels
-                    //get the middle pixel of the card as an interger (since odd numbered pixels will produce a .5 at the end)
-                    float CardMidWidth = CardArtwork.Width / 2;
-                    int CardMidWidthInt = (int)Math.Truncate(CardMidWidth);
-                    //Get the middle point for the height as an int
-                    float CardMidHeight = CardArtwork.Height / 2;
-                    int CardMidHeightInt = (int)Math.Truncate(CardMidHeight);
-                    //Now crop the image down so its 600 x 900. Because it will skew to the top left because of the above math you only subtract 299 and 449 for the top left corner
-                    CardArtwork = CardArtwork.Clone(new Rectangle(CardMidWidthInt - 299, CardMidHeightInt - 449, 600, 900), System.Drawing.Imaging.PixelFormat.DontCare);                    
-                }
-                else if(CardArtwork.Width > 600 && CardArtwork.Height <= 900)
-                {
-                    // if the image is too wide but close enough tall just clone the image to itself but shrink its width down but leave its height untouched
-                    //get the middle width pizel of the card as an interger (since odd numbered pixels will produce a .5 at the end)
-                    float CardMidWidth = CardArtwork.Width / 2;
-                    int CardMidWidthInt = (int)Math.Truncate(CardMidWidth);
-                    int ArtHeight = CardArtwork.Height;
-                    //now overwrite the image with the section cropped to fit from the center (not from the top left like the built in clipping does
-                    CardArtwork = CardArtwork.Clone(new Rectangle(CardMidWidthInt - 299, 0, 600, ArtHeight), System.Drawing.Imaging.PixelFormat.DontCare);
-                }
-                else if(CardArtwork.Height >900 && CardArtwork.Width <= 600)
-                {
-                    // If the image is taller than needed but close enough wide do the same as above but to the height instead of width
-                    //Get the middle point for the height as an int
-                    float CardMidHeight = CardArtwork.Height / 2;
-                    int CardMidHeightInt = (int)Math.Truncate(CardMidHeight);
-                    //and get the width becuase the clone method is a baby and cant do the math for you
-                    int ArtworkWidth = CardArtwork.Width;
-                    //now overwrite the image with an adjusted version
-                    CardArtwork = CardArtwork.Clone(new Rectangle(0, CardMidHeightInt - 449, ArtworkWidth, 900), System.Drawing.Imaging.PixelFormat.DontCare);
-                }
-                //If the image is smaller than 600x900 drawing it unscaled and clipped wont do anything and it will stretch itself to fit the rectangle
-                //and if the image is 600x900 well no adjustments need be made
-                using (Graphics graphics = Graphics.FromImage(CardBitmap))
-                {
-                    //Actually drawing the image over the prior background
-                    graphics.DrawImageUnscaledAndClipped(CardArtwork, new Rectangle(112, 112, 600, 900));
-                    CardArtwork.Dispose();
-                }
-                //Now draw the textboxes over the top of that
-                //The graphics class understands transparency thankfully so now we can do the same as above but for the textboxes
-                Bitmap CardBoxBitmap = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "\\CardTextBoxes.png");
-                using (Graphics graphics = Graphics.FromImage(CardBitmap))
-                {
-                    graphics.DrawImage(CardBoxBitmap, new Rectangle(117, 117, 590, 920));
-                    CardBoxBitmap.Dispose();
-                }
+                //now draw the artwork and textboxes over this background (which is just there as a backup so there is no pure white background)
+                CardBitmap = DrawCardBase(ArtPath, CardBitmap);
                 //Now we need to get the information for the Cards text from the database with a query
                 string GetCardToRenderQuery = $"SELECT * FROM {CardSet} WHERE card_code='{CardIndex}'";
                 SQLiteCommand GetCardToRenderCommand = new SQLiteCommand(GetCardToRenderQuery, Globals.GlobalVars.DatabaseConnection);
@@ -133,6 +78,11 @@ namespace Starcoasters_Card_Generator
                     int TextHeight = 10000;
                     //And the font we will be using                    
                     Font CostFont = new Font("Downlink", FontSize, System.Drawing.FontStyle.Bold, GraphicsUnit.Pixel);
+                    //TODO the card cost uses 72 Downlink Bold in Black at TODO find the top left corner of the different text boxes TODO center justified
+                    //make the solidbrush for drawing the cost text
+                    SolidBrush Brush = new SolidBrush(Color.Black);
+                    CardBitmap = DrawText(CardBitmap, 85, 85, 80, 80, CardCostString, 72, "Downlink", "bold", Brush, true);
+                    Brush.Dispose();
                     //now to draw the text until it fits into a 79x79 box
                     do
                     {
@@ -682,7 +632,7 @@ namespace Starcoasters_Card_Generator
                     FontBrush.Dispose();
                     //clean up the card reader
                     GetCardToRenderReader.Close();
-                }
+                }                
                 return CardBitmap;
             }
             catch(Exception ex)
@@ -738,9 +688,9 @@ namespace Starcoasters_Card_Generator
                         graphics.CompositingMode = CompositingMode.SourceCopy;
                         //dont compress the image colours
                         graphics.CompositingQuality = CompositingQuality.HighQuality;
-                        //use the best quality scaling algorithm, lower proformance but good
+                        //use the best quality scaling algorithm, lower proformance but good appearance
                         graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        //same deal but for something
+                        //same deal but for something that needs edge smoothing
                         graphics.SmoothingMode = SmoothingMode.HighQuality;
                         //if pixels have to be shifted do so at high quality to avoid ghosting
                         graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -751,6 +701,7 @@ namespace Starcoasters_Card_Generator
                             graphics.DrawImage(card, rectangle, 0, 0, card.Width, card.Height, GraphicsUnit.Pixel, wrapMode);
                         }
                         //now make the card match the smaller version
+                        card.Dispose();
                         card = resizedimage;
                         //and change the subdirectory it will be saved to
                         subdirectory = "\\Vassal";
@@ -769,7 +720,7 @@ namespace Starcoasters_Card_Generator
             }
         }
         //A function to draw the text where its needed
-        public static Bitmap DrawText(int SizX, int SizY, string Text, int FontSize, string FontFamily , string FontStyle, SolidBrush FontBrush, Color FontColor, bool CenterJustified)
+        public static Bitmap DrawText(Bitmap Card, int CardPosX, int CardPosY, int SizX, int SizY, string Text, int FontSize, string FontFamily , string FontStyle, SolidBrush FontBrush, bool CenterJustified)
         {
             //Start with the bitmap this will be drawn on
             Bitmap Map = new Bitmap(SizX, SizY);
@@ -789,7 +740,7 @@ namespace Starcoasters_Card_Generator
                     //empty out the renderable string just in case it already has something in it
                     RenderableString = "";
                     //make the font we will be using accounting for bold or italics
-                    Font TestFont = GenerateFont(FontFamily, FontSize, FontStyle, FontColor);
+                    Font TestFont = GenerateFont(FontFamily, FontSize, FontStyle);
                     //now loop through every word in the text, adding to the string word by word , if it is too wide add a new line 
                     foreach(string word in SplitText)
                     {
@@ -818,31 +769,38 @@ namespace Starcoasters_Card_Generator
                 }
                 while (TextWidth > SizX || TextHeight > SizY);
                 //Now we have a usable string and a font size make the font we will use
-                Font TextFont = GenerateFont(FontFamily, FontSize, FontStyle, FontColor);
+                Font TextFont = GenerateFont(FontFamily, FontSize, FontStyle);
                 //set some graphical settings for niceness, slows the function down but for nicer results
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 //Not as nice as ClearType but doesnt require special fonts
                 g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit; 
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 //and some variables on where to start writing
-                int PosX;
-                int PosY;
+                int PosX = 0;
+                int PosY = 0;
                 //now adjust the posistion of the card text if it is center justified, not needing comparison since its already a bool
                 if (CenterJustified)
                 {
                     //if the text is centered it needs to have its top left corner shifted to the middle then back by half its own width and heigh
-                    PosX = (int)SizX / 2 - TextWidth / 2;
-                    PosY = (int)SizY / 2 - TextHeight / 2;
+                    PosX = (int)(SizX / 2) - (TextWidth / 2);
+                    PosY = (int)(SizY / 2) - (TextHeight / 2);
                 }
                 //Now draw the text in place
-                g.DrawString(RenderableString, TextFont, FontBrush, 632 - TextWidth / 2, 1027 - TextHeight / 2);                
+                g.DrawString(RenderableString, TextFont, FontBrush, PosX, PosY);                
             }
-            //and return the now rendered bitmap
-            return Map;
+            //now that map has been drawn as desired it needed to be drawn onto the card we were passed earlier 
+            using(Graphics g = Graphics.FromImage(Card))
+            {
+                //draw the textblock in without mutilating it or rescaling it but cropping it if by some miracle its bigger than asked
+                g.DrawImageUnscaledAndClipped(Map, new Rectangle(CardPosX, CardPosY, SizX, SizY));
+            }
+            //and return the now rendered card bitmap
+            return Card;
         }
-        public static Font GenerateFont(string FontFamily, int FontSize, string FontStyle, Color FontColor)
+        public static Font GenerateFont(string FontFamily, int FontSize, string FontStyle)
         {
             //make a new font from the values it is passed
+            //a color isnt needed since the font brush determines colours and patterns when the text is actually rendered
             if(FontStyle == "italic")
             {
                 //for italic fonts
@@ -864,6 +822,68 @@ namespace Starcoasters_Card_Generator
                 //return the new font
                 return NewFont;
             }            
+        }
+        public static Bitmap DrawCardBase(string ArtworkPath, Bitmap Card)
+        {
+            //This is to draw the artwork onto the card, resizing and or cropping it as needed to fit the required dimensions
+            //using statement to ensure all the graphics resources are released when the code finishes
+            using(Graphics g = Graphics.FromImage(Card))
+            {
+                if (!File.Exists(ArtworkPath))
+                {
+                    //if the file path is incorrect alert the user and point the program to the 
+                    //placeholder artwork so as to avoid concerns
+                    System.Windows.MessageBox.Show($"The file at {ArtworkPath} did not exist or the directory was wrong. Placeholder artwork has been substituted for this card!");
+                    ArtworkPath = Directory.GetCurrentDirectory() + $"\\PlaceholderArt.png";                    
+                }
+                //now make a bitmap of the artwork pointed to
+                Bitmap Artwork = new Bitmap(ArtworkPath);
+                //now to scale the image down to a suitable size, cropping it as needs be to an 11:15 aspect ratio
+                //use the smaller of the two scale ratios just to make sure the image stays within its own boundaries
+                float Scale = Math.Min((Artwork.Width / 11), (Artwork.Height / 15));
+                //now make a rectangle that is of the scale needed and posistioned roughly centered on the image (skews to the top left though)                
+                int CroppedWidth = (int)(11 * Scale);
+                int CroppedHeight = (int)(15 * Scale);                
+                Rectangle CroppedRectangle = new Rectangle((int)(Artwork.Width - CroppedWidth) / 2, (int)(Artwork.Height - CroppedHeight) / 2, CroppedWidth, CroppedHeight);
+                //now crop the artwork down
+                Artwork = Artwork.Clone(CroppedRectangle, PixelFormat.DontCare);
+                //now scale it down to the right size, the using statements are to try and keep memory leakage to a minimum
+                using(Bitmap ScaledImage = new Bitmap(825, 1125))
+                {
+                    using(Graphics Scaler = Graphics.FromImage(ScaledImage))
+                    {
+                        //need to set some quality of life settings so the down scaling happens cleanly
+                        Scaler.CompositingMode = CompositingMode.SourceCopy;
+                        Scaler.CompositingQuality = CompositingQuality.HighQuality;
+                        Scaler.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        Scaler.SmoothingMode = SmoothingMode.HighQuality;
+                        Scaler.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        //now use a wrap mode so that the down scaling does go as well as possible
+                        using (ImageAttributes Wrapper = new ImageAttributes())
+                        {
+                            //honestly this i dont understand, only bit of code I dont TODO read about wrap modes
+                            Wrapper.SetWrapMode(WrapMode.TileFlipXY);
+                            Scaler.DrawImage(Artwork, new Rectangle(0, 0, 825, 1125), 0, 0, Artwork.Width, Artwork.Height, GraphicsUnit.Pixel, Wrapper);
+                        }
+                    }
+                    //now clean out Artwork so that it isnt hogging resources
+                    Artwork.Dispose();
+                    //and make it take a copy of the scaled image to replace what it was
+                    Artwork = new Bitmap(ScaledImage);
+                }
+                //if the artwork is entirely too smal the graphics will upscale it automatically, and if it is the right size obviously nothing needs be done
+                //now draw the artwork onto the card
+                g.DrawImage(Artwork, new Rectangle(0, 0, 825, 1125));                
+                //now artwork can be disposed of
+                Artwork.Dispose();
+                //now a bitmap for the textboxes that are drawn over the top of this artwork
+                Bitmap TextBoxes = new Bitmap(Directory.GetCurrentDirectory() + "\\TextBoxes.png");
+                //no special processing is needed for these so just draw the whole box in place
+                g.DrawImage(TextBoxes, new Rectangle(80, 80, 665, 965));
+                TextBoxes.Dispose();
+            }
+            //now return the now based card
+            return Card;
         }
     }
 }
