@@ -201,6 +201,8 @@ namespace Starcoasters_Card_Generator
                         //More substitution for the flavour text and image path by the same means
                         TBX_FlavourText.Text = GetCardReader["flavour"].ToString();
                         TBX_ImagePath.Text = GetCardReader["imagestring"].ToString();
+                        //pay respects to the artists
+                        TBX_ArtistBox.Text = GetCardReader["artist"].ToString();
                         //get the rarity from the database and set the appropriate radio button
                         string Rarity = GetCardReader["rarity"].ToString();
                         if(Rarity == "ultima")
@@ -455,6 +457,7 @@ namespace Starcoasters_Card_Generator
                 // now just for the flavour text and filepath for the image
                 string FlavourString = MakeStringEscaped(TBX_FlavourText.Text);
                 string FilepathString = MakeStringEscaped(TBX_ImagePath.Text);
+                string ArtistString = MakeStringEscaped(TBX_ArtistBox.Text);
                 //now get the rarity out of the radio buttons
                 string CardRarity = "";
                 if (RBT_Common.IsChecked == true)
@@ -480,15 +483,15 @@ namespace Starcoasters_Card_Generator
                 {
                     //if the card is new the Card Code that was sent here needs to be written into the table
                     string NewCardSetCode = CardsCode;
-                    SaveCardQuery = $"INSERT INTO {CardsSet} (card_code, name_primary, name_secondary, cost, hp, atk, def, keywords, ability, flavour, imagestring, rarity)" +
+                    SaveCardQuery = $"INSERT INTO {CardsSet} (card_code, name_primary, name_secondary, cost, hp, atk, def, keywords, ability, flavour, imagestring, rarity, artist)" +
                     $"VALUES ('{NewCardSetCode}', '{CardNamePrimary}', '{CardNameSub}', '{CardCostString}', '{CardHP}', '{CardATK}', '{CardDEF}', '{KeywordsString}', " +
-                    $"'{Abilities}', '{FlavourString}', '{FilepathString}', '{CardRarity}')";
+                    $"'{Abilities}', '{FlavourString}', '{FilepathString}', '{CardRarity}', '{ArtistString}')";
                 }
                 else
                 {
                     SaveCardQuery = $"UPDATE {CardsSet} SET name_primary = '{CardNamePrimary}', name_secondary = '{CardNameSub}', cost = '{CardCostString}', hp = '{CardHP}', " +
                         $"atk = '{CardATK}', def = '{CardDEF}', keywords = '{KeywordsString}', ability = '{Abilities}', flavour = '{FlavourString}', imagestring ='{FilepathString}'," +
-                        $" rarity ='{CardRarity}'" +
+                        $" rarity = '{CardRarity}', artist = '{ArtistString}'" +
                         $" WHERE card_code = '{CardsCode}'";
                 }
                 //Now actually execute the query

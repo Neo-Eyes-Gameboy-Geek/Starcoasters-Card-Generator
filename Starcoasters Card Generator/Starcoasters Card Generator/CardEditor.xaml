@@ -29,6 +29,7 @@
             <RowDefinition Height="3*"/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="0.75*"/>
         </Grid.RowDefinitions>
         <!--The Showstopper is first the third-of-a-page image preview-->
@@ -98,8 +99,11 @@
         <TextBox x:Name="TBX_ImagePath" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="7"/>
         <!--And a button to let you use the file explorer like normal people do-->
         <Button x:Name="BTN_ImagePathSearch" Grid.Column="9" Grid.Row="7" Content="Search" Click="BTN_ImagePathSearch_Click"/>
+        <!--A spot to put in the name of the artist who drew the artwork-->
+        <TextBlock x:Name="TBL_ArtistLabel" Grid.Column="1" Grid.Row="8" Text="Artist:"/>
+        <TextBox x:Name="TBX_ArtistBox" Grid.Column="2" Grid.ColumnSpan="7" Grid.Row="8"/>
         <!--And the buttons for saving the card thus created or previewing what the card will look like-->
-        <Button x:Name="BTN_SaveCard" Grid.Column="9" Grid.Row="8" Content="Save Card" Click="BTN_SaveCard_Click"/>
-        <Button x:Name="BTN_PreviewCard" Grid.Column="8" Grid.Row="8" Content="Preview Card" Click="BTN_PreviewCard_Click"/>
+        <Button x:Name="BTN_SaveCard" Grid.Column="9" Grid.Row="9" Content="Save Card" Click="BTN_SaveCard_Click"/>
+        <Button x:Name="BTN_PreviewCard" Grid.Column="8" Grid.Row="9" Content="Preview Card" Click="BTN_PreviewCard_Click"/>
     </Grid>
 </Window>

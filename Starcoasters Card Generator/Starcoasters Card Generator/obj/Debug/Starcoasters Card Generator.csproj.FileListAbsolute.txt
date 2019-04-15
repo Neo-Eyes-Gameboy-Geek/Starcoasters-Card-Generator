@@ -32,10 +32,11 @@ C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Ca
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\Starcoasters Card Generator.exe
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\Starcoasters Card Generator.pdb
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\PlaceholderArt.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\book.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\eye1.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\RangeIcon.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\shieldicon.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\SniperIcon.png
-C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\sword.png
 C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\obj\Debug\Starcoasters Card Generator.csprojAssemblyReference.cache
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\TextBoxes.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\MageIcon.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\MarksmanIcon.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\PsykerIcon.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\RangeIcon.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\SupportIcon.png
+C:\Users\user\Documents\Starcoasters\Starcoasters-Card-Generator\Starcoasters Card Generator\Starcoasters Card Generator\bin\Debug\VanguardIcon.png
