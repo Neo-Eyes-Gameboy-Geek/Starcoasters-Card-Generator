@@ -179,7 +179,7 @@ namespace Starcoasters_Card_Generator
                     //Get this keyword into the ReaderCard
                     ReaderCard.CardSpecies = CardKeywords[1];
                     //now gotta get the number of abilities
-                    string[] CardAbilities = GetCardReader["ability"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] CardAbilities = GetCardReader["ability"].ToString().Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                     int AbilityCount = 0;
                     //cycle through the split array to set the Ability Count
                     foreach (string Ability in CardAbilities)
