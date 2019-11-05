@@ -81,8 +81,8 @@ Psychic\\Vanguard\\Range
 Psychic\\Vanguard\\Marksman
 Psychic\\Vanguard\\Range\\Marksman
 Psychic\\Supporter
-Psychic\\Support\\Range
-Psychic\\Support\\Range\\Marksman
+Psychic\\Supporter\\Range
+Psychic\\Supporter\\Range\\Marksman
 Psychic\\Mage\\Range
 Psychic\\Mage\\Marksman
 Psychic\\Mage\\Range\\Marksman
@@ -91,8 +91,8 @@ Psychic\\Mage\\Vanguard\\Range
 Psychic\\Mage\\Vanguard\\Marksman
 Psychic\\Mage\\Vanguard\\Range\\Marksman
 Psychic\\Mage\\Supporter
-Psychic\\Mage\\Support\\Range
-Psychic\\Mage\\Support\\Range\\Marksman
+Psychic\\Mage\\Supporter\\Range
+Psychic\\Mage\\Supporter\\Range\\Marksman
 Mage\\Range
 Mage\\Marksman
 Mage\\Range\\Marksman
@@ -101,8 +101,8 @@ Mage\\Vanguard\\Range
 Mage\\Vanguard\\Marksman
 Mage\\Vanguard\\Range\\Marksman
 Mage\\Supporter
-Mage\\Support\\Range
-Mage\\Support\\Range\\Marksman
+Mage\\Supporter\\Range
+Mage\\Supporter\\Range\\Marksman
 #Main Character
 |CMB_Form
  

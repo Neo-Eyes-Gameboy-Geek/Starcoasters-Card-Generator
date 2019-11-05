@@ -250,7 +250,7 @@ namespace Starcoasters_Card_Generator
                             int AbilityHeight = 250 / AbilityCount;
                             AbilityHeight = AbilityHeight * AbilityNumber;
                             AbilityHeight += 755;
-                            graphics.DrawImageUnscaledAndClipped(AbilityMap, new Rectangle(176, AbilityHeight, 479, TextHeight));
+                            graphics.DrawImageUnscaledAndClipped(AbilityMap, new Rectangle(176, AbilityHeight, 564, TextHeight));
                         }
                         //now increment the ability number
                         AbilityNumber++;
